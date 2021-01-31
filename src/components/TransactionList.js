@@ -6,7 +6,6 @@ export const TransactionList = () => {
 	const { transactions, getTransactions } = useContext(GlobalContext);
 
 	useEffect(() => {
-		console.log('rendering...')
 		getTransactions();
 		return () => console.log('unmounting...');
 	}, []);

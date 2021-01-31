@@ -7,6 +7,7 @@ const initialState = {
 	error: null,
 	loading: true
 };
+const API_URL = `http://localhost:4000/api/v1/transactions`;
 
 // Create global context
 export const GlobalContext = createContext(initialState);
@@ -16,16 +17,13 @@ export const GlobalProvider = ({ children }) => {
 	const [ state, dispatch ] = useReducer(AppReducer, initialState);
 
 	// Actions
-
 	async function getTransactions() {
 		try {
-			const response = await axios.get('/api/v1/transactions');
-
+			const response = await axios.get(API_URL);
 			dispatch({
 				type: 'GET_TRANSACTIONS',
 				payload: response.data.data
 			});
-			console.log('response', response);
 		} catch (error) {
 			dispatch({
 				type: 'TRANSACTION_ERROR',
@@ -36,7 +34,7 @@ export const GlobalProvider = ({ children }) => {
 
 	async function deleteTransaction(id) {
 		try {
-			await axios.delete(`/api/v1/transactions/${id}`);
+			await axios.delete(`${API_URL}/${id}`);
 			dispatch({
 				type: 'DELETE_TRANSACTION',
 				payload: id
@@ -56,10 +54,10 @@ export const GlobalProvider = ({ children }) => {
 			}
 		};
 		try {
-			const res = await axios.post(`/api/v1/transactions`, transaction, config);
+			const res = await axios.post(API_URL, transaction, config);
 			dispatch({
 				type: 'ADD_TRANSACTION',
-				payload: res.data.data 
+				payload: res.data.data
 			});
 		} catch (error) {
 			dispatch({
