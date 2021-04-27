@@ -1,4 +1,4 @@
-FROM node:12.18.2 as builder
+FROM node:12.22.1 as builder
 
 WORKDIR /app
 
